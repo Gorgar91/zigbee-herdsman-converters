@@ -6188,6 +6188,28 @@ const devices = [
             await configureReporting.activePower(endpoint);
         },
     },
+        {
+        zigbeeModel: ['Remote-control-ZB3.0'],
+        model: '07087L',
+        vendor: 'Immax',
+        description: '4-Key Remote Controller',
+        supports: 'on/off, brightness up/down and click/hold/release, cct',
+        fromZigbee: [
+            fz.CCTSwitch_D0001_on_off,
+            fz.CCTSwitch_D0001_move_to_level_recall,
+            fz.CCTSwitch_D0001_move_to_colortemp_recall,
+            fz.CCTSwitch_D0001_colortemp_updown_hold_release,
+            fz.CCTSwitch_D0001_brightness_updown_hold_release,
+            fz.legacy_battery,
+        ],
+        toZigbee: [],
+        meta: {configureKey: 1},
+        configure: async (device, coordinatorEndpoint) => {
+            const endpoint = device.getEndpoint(1);
+            await bind(endpoint, coordinatorEndpoint, ['genPowerCfg']);
+            await configureReporting.batteryPercentageRemaining(endpoint);
+        },
+    },
 
     // Yale
     {
